@@ -1,2 +1,2 @@
-## newFun
+# newFun
 some interesting code
