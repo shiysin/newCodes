@@ -1,2 +1,2 @@
 ## newFun
-some interesting code
+- firework烟花效果
