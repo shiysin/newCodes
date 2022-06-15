@@ -8,6 +8,9 @@ import org.slf4j.LoggerFactory;
 import java.beans.PropertyDescriptor;
 import java.util.Map;
 
+/**
+ * 动态为bean添加字段
+ */
 public class DynamicBeanUtils {
 
     private static final Logger logger = LoggerFactory.getLogger(DynamicBeanUtils.class);
