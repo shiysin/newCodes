@@ -1,3 +1,5 @@
+package utils;
+
 import java.io.InputStream;
 import java.sql.*;
 import java.util.*;
@@ -144,5 +146,16 @@ public class AddTableColumnUtils {
             e.printStackTrace();
         }
         return conn;
+    }
+}
+
+class TableColumnInsert{
+
+    public void insertTable(String tableSpace, String s) {
+
+    }
+
+    public void queryIsAdmdiv(String tableSpace, String s) {
+
     }
 }

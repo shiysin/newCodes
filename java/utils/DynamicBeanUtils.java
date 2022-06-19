@@ -1,3 +1,5 @@
+package utils;
+
 import com.google.common.collect.Maps;
 import net.sf.cglib.beans.BeanGenerator;
 import net.sf.cglib.beans.BeanMap;
