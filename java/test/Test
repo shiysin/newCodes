@@ -1,0 +1,160 @@
+import lombok.Data;
+
+import java.util.*;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.function.Function;
+import java.util.stream.Collectors;
+
+public class Test {
+
+    public static void main(String[] args) {
+
+        /**
+         * Integer i1=40 这一行代码会发生装箱，也就是说这行代码等价于 Integer i1=Integer.valueOf(40)。
+         * 因此，i1 直接使用的是缓存中的对象。而Integer i2 = new Integer(40) 会直接创建新的对象
+         */
+//        Integer i1 = 40;
+//        Integer i2 = new Integer(40);
+//        System.out.println(i1==i2);
+
+
+        int a = 10;
+        System.out.println(a +  (a >> 1));
+
+
+
+
+
+
+        /**
+         * 工站按人均分计件
+         */
+//        int n = 3, s = 100, k = 1;
+//
+//        String[] ns = {"n1", "n2", "n3"};
+//
+//        List<String> nsList = Arrays.asList(ns);
+//        Map<String, Integer> nsMap = nsList.stream().collect(Collectors.toMap(Function.identity(), Integer::new));
+//        List<String> cacheN = new ArrayList<>();
+//        for (int i = 0; i < k; i++) {
+//            int arg = s / n;
+//            AtomicInteger surplus = new AtomicInteger(s % n);
+//            nsMap.forEach((t, v) -> {
+//                if (surplus.get() != 0) {
+//                    v = arg + 1;
+//                    surplus.getAndDecrement();
+//                }
+//            });
+//        }
+
+
+//        Calendar calendar = Calendar.getInstance();
+//        System.out.println(calendar);
+//
+//        calendar.setTime(new Date());
+//        System.out.println(calendar);
+
+//        String goodsName = "xx脚";
+//        String status = "maded";
+//        if (!goodsName.contains("脚架") && !status.equals("made")) {
+//            System.out.println("不符合");
+//        }
+
+
+        new Test() {{
+//            System.out.println(getNewMap());
+//            System.out.println(Arrays.toString(this.twoSum(new int[0], 7)));
+
+//            System.out.println(containsNearbyDuplicate(new int[]{1,1,0,1}, 1));
+//            System.out.println(containsNearbyDuplicate(new int[]{1, 2, 3, 1, 2, 3}, 2));
+
+
+//            String url = "http://10.11.23.12:8080/printByBanner";
+//
+//            Pattern p = Pattern.compile("(\\d+\\.\\d+\\.\\d+\\.\\d+)");
+//            Matcher m = p.matcher(url);
+//
+//            //将符合规则的提取出来
+//            while(m.find()) {
+//                System.out.println("ip:"+m.group(1));
+//                System.out.println("port:"+m.group(2));
+//            }
+//
+//            System.out.println(url.substring(url.indexOf("//")+2, url.lastIndexOf(":")));
+
+
+//            parseEntity2Str();
+        }};
+
+
+//        StringBuilder str = new StringBuilder("12345");
+//        System.out.println(str.substring(0, str.length() - 1));
+
+
+//        System.out.println(DateUtil.format(new Date(), "yyyyMMddHHmmss"));
+
+    }
+
+    public int[] twoSum(int[] nums, int target) {
+
+        Map<Integer, Integer> hash = new HashMap<>();
+        for (int i = 0, n = nums.length; i < n; i++) {
+            if (hash.containsKey(target - nums[i])) {
+                return new int[]{hash.get(target - nums[i]), i};
+            }
+            hash.put(nums[i], i);
+        }
+        return null;
+    }
+
+    public Map<String, Object> getNewMap() {
+
+        return new HashMap<String, Object>(2) {{
+            put("name", "yang");
+            put("age", 18);
+        }};
+    }
+
+    public boolean containsNearbyDuplicate(int[] nums, int k) {
+
+        HashSet<Integer> set = new HashSet<>();
+        for (int i = 0; i < nums.length; i++) {
+            if (set.contains(nums[i])) {
+                return true;
+            }
+            set.add(nums[i]);
+            if (set.size() > k) {
+                set.remove(nums[i - k]);
+            }
+        }
+
+        return false;
+    }
+
+
+    public void parseEntity2Str() {
+        String str = "//库存编号\n    private String inventoryNo;\n    //出入库单据号\n    private String inventoryRecordCode;\n    //库存批次号\n    private String stockBatch;\n    //资源编码\n    private String resCode;\n    //资源名称\n    private String resName;\n    //资源类型 1成品 2半成品 3 原材料 4配件 5纸箱 6大件\n    private Integer resType;\n    //库区类型\n    private Integer areaType;\n    //数量\n    private Integer quantity;\n    //重量\n    private BigDecimal weight;\n    //操作类型 1入库，2出库 3调拨\n    private Integer operationType;\n    //单位编码\n    private String unitCode;\n    //执行日期\n    private Date actualDate;\n    //操作日期\n    private Date operationDate;\n    //过期日期\n    private Date expireDate;\n    //操作人\n    private String operationUser;\n    //领料人\n    private String recipient;\n    //领料人编码\n    private String recipientCode;\n    //仓库编码\n    private String warehouseCode;\n    //仓库名称\n    private String warehouseName;\n    //源仓库编码\n    private String sourceWarehouseCode;\n    //源库区编码\n    private String sourceAreaCode;\n    //源库位编码\n    private String sourceLocCode;\n    //源仓库名称\n    private String sourceWarehouseName;\n    //源库区名称\n    private String sourceAreaName;\n    //源库位名称\n    private String sourceLocName;\n    //源工站编码\n    private String sourceWorksectionCode;\n    //源工站名称\n    private String sourceWorksectionName;\n    //目标厂区编码\n    private String targetFactoryCode;\n    //目标车间编码\n    private String targetWorkshopCode;\n    //目标厂区名称\n    private String targetFactoryName;\n    //目标车间名称\n    private String targetWorkshopName;\n    //目标仓库编码\n    private String targetWarehouseCode;\n    //目标库区编码\n    private String targetAreaCode;\n    //目标库位编码\n    private String targetLocCode;\n    //目标仓库名称\n    private String targetWarehouseName;\n    //目标库区名称\n    private String targetAreaName;\n    //目标库位名称\n    private String targetLocName;\n    //目标工站编码\n    private String targetWorksectionCode;\n    //目标工站名称\n    private String targetWorksectionName;\n    //规格\n    private String resSpec;\n    //型号\n    private String resModel;\n    //备注\n    private String remark;\n    //标签码\n    private String markCode;\n    //厂区编码\n    private String factoryCode;\n    //车间编码\n    private String workshopCode;\n    //厂区名称\n    private String factoryName;\n    //车间名称\n    private String workshopName;\n    //供应商编码\n    private String supplierCode;\n    //供应商名称\n    private String supplierName;\n    //记录编号\n    private String preRecordCode;\n    //目标条码\n    private String targetMarkCode;\n    //源条码\n    private String sourceMarkCode;\n    //开启调拨\n    private Integer openAllocate;";
+
+        List<String> params = Arrays.asList(str.split(";"));
+
+        StringBuilder resultStr = new StringBuilder();
+
+        params.forEach(t -> {
+            t = t.trim();
+            String param = t.substring(t.lastIndexOf(" ") + 1);
+
+            List<String> paramList = Arrays.asList(param.split(""));
+
+            for (int i = 0; i < paramList.size() - 1; i++) {
+                String p = paramList.get(i);
+                char c = p.charAt(0);
+                if (Character.isUpperCase(c)) {
+                    param = param.replace(String.valueOf(c), "_" + Character.toLowerCase(c));
+                }
+            }
+            resultStr.append(param).append(", ");
+        });
+
+        System.out.println(resultStr);
+    }
+}
