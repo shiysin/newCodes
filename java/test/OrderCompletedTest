@@ -1,0 +1,73 @@
+import lombok.Data;
+
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ *  1.查询对应产品的订单，按货好日期从远到近排序，日期小的在前，并且过滤已货好的订单
+ *  2. 将报工数量填充到已完成数
+ */
+
+public class OrderCompletedTest {
+
+
+    public static void main(String[] args) {
+
+        List<Order> updateList = new ArrayList<>();
+        List<Order> orderList = new OrderCompletedTest().init();
+
+        int reportNum = 120;
+        for (int i = 0; i < orderList.size(); i++) {
+            if (reportNum <= 0) {
+                break;
+            }
+
+            int realNum = orderList.get(i).getRealNum();
+            int surplusNum = orderList.get(i).getPlanNum() - realNum;
+            if(surplusNum - reportNum > 0) {
+                realNum += reportNum;
+                reportNum -= reportNum;
+                orderList.get(i).setRealNum(realNum);
+            } else {
+                realNum += surplusNum;
+                reportNum -= surplusNum;
+                orderList.get(i).setRealNum(realNum);
+                orderList.get(i).setFlag(1);
+            }
+            updateList.add(orderList.get(i));
+        }
+        System.out.println(updateList.toString());
+    }
+    
+    public List init() {
+        List<Order> orderList = new ArrayList<>();
+        orderList.add(new Order() {{
+            setFlag(0);
+            setPlanNum(100);
+            setRealNum(0);
+        }});
+        orderList.add(new Order() {{
+            setFlag(0);
+            setPlanNum(50);
+            setRealNum(0);
+        }});
+        orderList.add(new Order() {{
+            setFlag(0);
+            setPlanNum(50);
+            setRealNum(0);
+        }});
+        return orderList;
+    }
+
+    @Data
+    class Order {
+
+        private Integer planNum;
+        private Integer realNum;
+        private Integer reportNum;
+        private Integer flag;
+
+
+    }
+
+}
