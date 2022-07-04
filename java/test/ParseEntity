@@ -1,0 +1,180 @@
+import cn.hutool.core.util.RandomUtil;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.*;
+
+/**
+ * 解析Entity生成前端 tableNameList、mainDialogOption.option
+ * <p>
+ * 运行 -> 复制所有Entity粘贴在Console -> 输入exit打印出结果.
+ */
+public class ParseEntity {
+
+    /**
+     * 替换模板
+     * #{TYPE} 为替换标识符
+     */
+    private final static Map<String, String> APPEND_VAL = new HashMap<String, String>() {{
+
+        put("tableType", "type: true, dictCode: \"#{TYPE}\", paramsFromList: []");
+        put("optionType", "type: \"select\", dictCode: \"#{TYPE}\"");
+
+    }};
+
+
+    public static void main(String[] args) {
+
+        new ParseEntity() {{
+            try {
+
+                startParse();
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }};
+    }
+
+
+    /**
+     * 开始
+     */
+    private static void startParse() {
+
+        int random = RandomUtil.randomInt();
+
+        StringBuilder paramsStr;
+
+        if (random % 2 == 0) {
+            System.out.println("BufferedReader...");
+            paramsStr = reader();
+        } else {
+            System.out.println("Scanner...");
+            paramsStr = scanner();
+        }
+
+        String entities = paramsStr.substring(paramsStr.indexOf("{") + 1, paramsStr.toString().contains("}") ? paramsStr.lastIndexOf("}") : paramsStr.length() - 1);
+        List<String> params = Arrays.asList(entities.split(";"));
+
+        // tableNameList
+        ParseEntity.parseTableList(params);
+
+        // mainDialogOption.option
+        ParseEntity.parseOption(params);
+
+        System.out.println("--------------------------------------------- end ----------------------------------------------");
+
+    }
+
+
+    /**
+     * BufferedReader的读取方式
+     *
+     * @return paramsStr
+     */
+    private static StringBuilder reader() {
+
+        System.out.println("请复制Entity页面粘贴在下方：（输入【exit】退出输入）");
+
+        StringBuilder paramsStr = new StringBuilder();
+
+        try (BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in))) {
+
+            String line;
+
+            while ((line = bufferedReader.readLine()) != null) {
+                if (line.contains("exit")) {
+                    System.out.println("starting...");
+                    break;
+                }
+                paramsStr.append(line);
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return paramsStr;
+    }
+
+
+    /**
+     * Scanner的读取方式
+     *
+     * @return paramsStr
+     */
+    private static StringBuilder scanner() {
+        System.out.println("请复制Entity页面粘贴在下方：（输入【exit】退出输入）");
+
+        StringBuilder paramsStr = new StringBuilder();
+
+        try (Scanner in = new Scanner(System.in)) {
+
+            String line;
+
+            while (in.hasNextLine()) {
+                line = in.nextLine();
+                if (line.contains("exit")) {
+                    System.out.println("starting...");
+                    break;
+                }
+                paramsStr.append(line);
+            }
+        }
+
+        return paramsStr;
+    }
+
+
+    /**
+     * 生成tableNameList
+     *
+     * @param params list
+     */
+    private static void parseTableList(List<String> params) {
+
+        System.out.println("-------------------------------------------- tableNameList -------------------------------------------");
+
+        params.forEach(t -> {
+            t = t.trim();
+            String name = t.substring(t.indexOf("//") + 2, t.indexOf(" "));
+            String param = t.substring(t.lastIndexOf(" ") + 1);
+
+            String lineStart = "{ name: \"" + name + "\", params: \"" + param + "\"";
+            if (param.toLowerCase().contains("type") || param.toLowerCase().contains("status")) {
+                lineStart = lineStart + ", " + APPEND_VAL.get("tableType").replace("#{TYPE}", param);
+            }
+
+            System.out.println(lineStart + " },");
+        });
+
+    }
+
+
+    /**
+     * mainDialogOption.option
+     *
+     * @param params list
+     */
+    private static void parseOption(List<String> params) {
+
+        System.out.println("-------------------------------------- mainDialogOption.option -------------------------------------");
+
+        params.forEach(t -> {
+            t = t.trim();
+            String name = t.substring(t.indexOf("//") + 2, t.indexOf(" "));
+            String field = t.substring(t.lastIndexOf(" ") + 1);
+
+            String lineStart = "{ name: \"" + name + "\", field: \"" + field + "\"";
+            if (field.toLowerCase().contains("type") || field.toLowerCase().contains("status")) {
+                lineStart = lineStart + ", " + APPEND_VAL.get("optionType").replace("#{TYPE}", field);
+            } else {
+                lineStart = lineStart + ", type: \"input\"";
+            }
+
+            System.out.println(lineStart + " },");
+        });
+    }
+}
