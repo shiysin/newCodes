@@ -9,6 +9,3 @@
 - [表结构批量添加字段](https://github.com/shiysin/newCodes/blob/master/java/utils/AddTableColumnUtils)
 - [动态bean插入字段](https://github.com/shiysin/newCodes/blob/master/java/utils/DynamicBeanUtils)
 
-
-### 趣味js
-- [js实现烟火效果](https://github.com/shiysin/newCodes/blob/master/js/fireworks)
